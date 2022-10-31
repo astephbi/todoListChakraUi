@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import { Heading, VStack } from "@chakra-ui/react";
+import NavBar from "./components/NavBar";
+import TodoList from "./components/TodoList";
+import AddList from "./components/AddList";
+import { useState, useEffect } from "react";
 
 function App() {
+  const initialTodos = [
+    {
+      id: "1",
+      body: "get bread",
+    },
+    {
+      id: "2",
+      body: "get bread",
+    },
+    {
+      id: "3",
+      body: "get bread",
+    },
+  ];
+  const [todos, setTodos] = useState(initialTodos);
+
+  function deleteTodo(id) {
+    const newTodos = todos.filter((todo) => {
+      return todo.id !== id;
+    });
+    setTodos(newTodos);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <VStack mb={8}>
+      <NavBar />
+      <Heading size="3xl" fontWeight="bold">
+        Todo List App
+      </Heading>
+      <TodoList todos={todos} deleteTodo={deleteTodo} />
+      <AddList />
+    </VStack>
   );
 }
 
